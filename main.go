@@ -8,6 +8,5 @@ import (
 
 func main() {
 	fmt.Println("Payment service")
-	s := api.Server{}
-	s.Start()
+	api.StartServer()
 }

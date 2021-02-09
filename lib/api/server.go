@@ -1,8 +1,8 @@
 package api
 
 import (
-	"errors"
-	"net/http"
+	"fmt"
+	"path"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
@@ -11,14 +11,29 @@ import (
 )
 
 type Server struct {
-	Config   config.Config
+	Config   *config.Config
 	Database database.DBClient
-	router   *echo.Echo
+	Router   *echo.Echo
+	Host     string
+	Port     int
 }
 
 func (s *Server) Start() error {
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Errorf("Error start server: %v", err)
-	}
-	return errors.New("Server failed")
+
+	address := fmt.Sprintf("%s:%d", s.Config.Host, s.Config.Port)
+	log.Infof("Listening on %s", address)
+	return s.Router.Start(address)
+}
+
+func NewServer(cfg *config.Config) Server {
+	server := Server{Config: cfg, Router: echo.New()}
+	server.Router.GET(path.Join(cfg.APIPath, "/v1/payment/history"), server.TransactionHistory)
+	return server
+}
+
+func StartServer() {
+	cfg := config.Config{Host: "localhost", Port: 8080}
+	server := NewServer(&cfg)
+	server.Config = &cfg
+	server.Start()
 }

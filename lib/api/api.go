@@ -1,5 +1,11 @@
 package api
 
-func (s *Server) TransactionHistory() {
+import (
+	"net/http"
 
+	"github.com/labstack/echo"
+)
+
+func (s *Server) TransactionHistory(context echo.Context) error {
+	return context.JSON(http.StatusOK, "Hello")
 }
