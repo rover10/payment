@@ -1,9 +1,10 @@
 package server
 
 import (
-	"config"
-	"database"
 	"net/http"
+
+	"github.com/rover10/payment/config"
+	"github.com/rover10/payment/database"
 )
 
 type Server struct {
