@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/rover10/payment/src/server"
+	"github.com/rover10/payment/lib/api"
 )
 
 func main() {
 	fmt.Println("Payment service")
-	s := server.Server{}
+	s := api.Server{}
 	s.Start()
 }
