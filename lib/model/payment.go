@@ -2,5 +2,11 @@ package model
 
 type Payment struct{}
 type PaymentHistory struct {
-	Amount float64 `json:"amount"`
+	ID          int64   `json:"id"`
+	UTR         string  `json:"utr"`
+	Amount      float64 `json:"amount"`
+	FromAccount int64   `json:"fromAccountId"`
+	ToAccount   int64   `json:"toAccountId"`
+	PaymentTime string  `json:"paymentTime"`
+	Status      string  `json:"status"`
 }

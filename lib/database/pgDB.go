@@ -22,10 +22,7 @@ func (client *Client) DBConnect(config *config.Config) error {
 		return err
 	}
 	db.SetConnMaxLifetime(60 * time.Minute)
-	fmt.Println("here ->")
-	fmt.Println(client)
 	client.db = db
-	fmt.Println("here ->")
 	return nil
 }
 
@@ -36,11 +33,9 @@ func (client *Client) CreatePayment(model.Payment) (model.Payment, error) {
 func (client *Client) PaymentHistory(account_id int) ([]model.PaymentHistory, error) {
 	var rows *sql.Rows
 	var err error
-	fmt.Println(client)
-	fmt.Println(client.db)
 	// Todo - Paging
 	rows, err = client.db.Query(`
-		SELECT amount FROM transaction 
+		SELECT id,utr,amount,from_account_id, to_account_id, payment_time, status   FROM transaction 
 			WHERE 
 				from_account_id 
 					IN (select id from users_account where user_id = $1)  
@@ -56,7 +51,13 @@ func (client *Client) PaymentHistory(account_id int) ([]model.PaymentHistory, er
 	for rows.Next() {
 		pay := model.PaymentHistory{}
 		err := rows.Scan(
+			&pay.ID,
+			&pay.UTR,
 			&pay.Amount,
+			&pay.FromAccount,
+			&pay.ToAccount,
+			&pay.PaymentTime,
+			&pay.Status,
 		)
 		if err != nil {
 			fmt.Println(err)
