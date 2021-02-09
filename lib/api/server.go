@@ -26,10 +26,10 @@ func (s *Server) Start() error {
 	return s.Router.Start(address)
 }
 
-func NewServer(cfg *config.Config) Server {
+func NewServer(cfg *config.Config) *Server {
 	server := Server{Config: cfg, Router: echo.New()}
-	server.Router.GET(path.Join(cfg.APIPath, "/v1/payment/history"), server.TransactionHistory)
-	return server
+	server.Router.GET(path.Join(cfg.APIPath, "/v1/payment/history/:userId"), server.TransactionHistory)
+	return &server
 }
 
 func StartServer() {
@@ -39,7 +39,7 @@ func StartServer() {
 
 	//Connect to db
 	dbclient := database.Client{}
+	dbclient.DBConnect(&cfg)
 	server.Database = &dbclient
-	server.Database.DBConnect(&cfg)
 	server.Start()
 }
