@@ -3,9 +3,8 @@ package database
 import (
 	"database/sql"
 
-	"github.com/rover10/payment/model"
-
 	"github.com/rover10/payment/config"
+	"github.com/rover10/payment/model"
 )
 
 type Client struct {
