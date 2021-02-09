@@ -3,8 +3,8 @@ package database
 import (
 	"database/sql"
 
-	"github.com/rover10/payment/config"
-	"github.com/rover10/payment/model"
+	"github.com/rover10/payment/src/config"
+	"github.com/rover10/payment/src/model"
 )
 
 type Client struct {
@@ -16,5 +16,5 @@ func (client *Client) DBConnect(config *config.Config) error {
 }
 
 func CreatePayment(model.Payment) (model.Payment, error) {
-	return nil, nil
+	return model.Payment{}, nil
 }

@@ -1,8 +1,8 @@
 package database
 
 import (
-	"github.com/rover10/payment/config"
-	"github.com/rover10/payment/model"
+	"github.com/rover10/payment/src/config"
+	"github.com/rover10/payment/src/model"
 )
 
 type DBClient interface {
