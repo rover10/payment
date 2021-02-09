@@ -6,13 +6,14 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
+	_ "github.com/lib/pq"
 	"github.com/rover10/payment/lib/config"
 	"github.com/rover10/payment/lib/database"
 )
 
 type Server struct {
 	Config   *config.Config
-	Database database.DBClient
+	Database *database.Client
 	Router   *echo.Echo
 	Host     string
 	Port     int
@@ -35,5 +36,10 @@ func StartServer() {
 	cfg := config.Config{Host: "localhost", Port: 8080}
 	server := NewServer(&cfg)
 	server.Config = &cfg
+
+	//Connect to db
+	dbclient := database.Client{}
+	server.Database = &dbclient
+	server.Database.DBConnect(&cfg)
 	server.Start()
 }
