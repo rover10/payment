@@ -53,9 +53,6 @@ func (client *Client) PaymentHistory(account_id int, offset int64, limit int64) 
 		`,
 		account_id, offset, limit,
 	)
-	fmt.Println("limit")
-	fmt.Println(limit)
-
 	if err != nil {
 		fmt.Println(err)
 		return nil, err

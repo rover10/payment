@@ -9,14 +9,16 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/rover10/payment/lib/config"
 	"github.com/rover10/payment/lib/database"
+	"github.com/rover10/payment/lib/payservice"
 )
 
 type Server struct {
-	Config   *config.Config
-	Database *database.Client
-	Router   *echo.Echo
-	Host     string
-	Port     int
+	Config         *config.Config
+	Database       *database.Client
+	Router         *echo.Echo
+	Host           string
+	Port           int
+	PaymentService payservice.PaymentServiceInterface
 }
 
 func (s *Server) Start() error {
@@ -27,6 +29,8 @@ func (s *Server) Start() error {
 
 func NewServer(cfg *config.Config) *Server {
 	server := Server{Config: cfg, Router: echo.New()}
+	fmt.Println(server.PaymentService)
+	server.PaymentService = &payservice.PaymentService{}
 	server.Router.GET(path.Join(cfg.APIPath, "/v1/payment/history/:userId"), server.TransactionHistory)
 	return &server
 }
