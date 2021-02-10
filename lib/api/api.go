@@ -28,9 +28,9 @@ func (s *Server) TransactionHistory(context echo.Context) error {
 	// limit
 	var limit int64 = 10
 	var maxAllowed int64 = 100
-	paramlimit := context.QueryParam("limit")
-	if paramlimit != "" {
-		if v, err := strconv.ParseInt(paramlimit, 10, 64); err == nil && v <= maxAllowed && v > 0 {
+	paramLimit := context.QueryParam("limit")
+	if paramLimit != "" {
+		if v, err := strconv.ParseInt(paramLimit, 10, 64); err == nil && v <= maxAllowed && v > 0 {
 			limit = v
 		}
 	}
