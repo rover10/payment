@@ -35,13 +35,17 @@ func (client *Client) PaymentHistory(account_id int) ([]model.PaymentHistory, er
 	var err error
 	// Todo - Paging
 	rows, err = client.db.Query(`
-		SELECT id,utr,amount,from_account_id, to_account_id, payment_time, status   FROM transaction 
+		SELECT 
+			id,utr,amount,from_account_id,to_account_id,payment_time,status 
+			FROM transaction 
 			WHERE 
 				from_account_id 
 					IN (select id from users_account where user_id = $1)  
 			OR 
 				to_account_id 
-					IN (select id from users_account where user_id = $1)`, account_id)
+					IN (select id from users_account where user_id = $1)`,
+		account_id,
+	)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
