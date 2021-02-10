@@ -39,16 +39,11 @@ func (client *Client) PaymentHistory(account_id int, offset int64, limit int64) 
 	fmt.Printf("\noffset %d", offset)
 	rows, err = client.db.Query(`
 		SELECT 
-			id,utr,amount,from_account_id,to_account_id,payment_time,status 
-			FROM transaction 
+		ta.id, ta.utr, ta.amount, ta.from_account_id, ta.to_account_id, ta.payment_time, ta.status 
+			FROM transaction ta 
+			INNER JOIN
+				users_account ua ON (from_account_id = ua.id  OR to_account_id = ua.id) AND user_id = $1
 			WHERE 
-				(from_account_id 
-					IN (select id from users_account where user_id = $1)  
-			OR 
-				to_account_id 
-					IN (select id from users_account where user_id = $1)
-				)
-			AND
 				id < $2
 			ORDER BY id DESC 
 			LIMIT $3
