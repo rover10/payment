@@ -20,7 +20,6 @@ type Server struct {
 }
 
 func (s *Server) Start() error {
-
 	address := fmt.Sprintf("%s:%d", s.Config.Host, s.Config.Port)
 	log.Infof("Listening on %s", address)
 	return s.Router.Start(address)
@@ -33,7 +32,6 @@ func NewServer(cfg *config.Config) *Server {
 }
 
 func StartServer(cfg *config.Config) {
-
 	server := NewServer(cfg)
 	server.Config = cfg
 	server.Start()

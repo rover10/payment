@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"math"
 	"net/http"
 	"strconv"
@@ -36,11 +35,6 @@ func (s *Server) TransactionHistory(context echo.Context) error {
 			limit = v
 		}
 	}
-
-	fmt.Println("--->")
-	fmt.Println(database.DB)
-	fmt.Println("--->")
-
 	res, _ := database.DB.PaymentHistory(userId, offSet, limit)
 	return context.JSON(http.StatusOK, res)
 }
