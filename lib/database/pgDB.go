@@ -30,24 +30,34 @@ func (client *Client) CreatePayment(model.Payment) (model.Payment, error) {
 	return model.Payment{}, nil
 }
 
-func (client *Client) PaymentHistory(account_id int) ([]model.PaymentHistory, error) {
+func (client *Client) PaymentHistory(account_id int, offset int64, limit int64) ([]model.PaymentHistory, error) {
 	var rows *sql.Rows
 	var err error
 	// Todo - Paging
 	// Fetch in reverse order to get latest payment first
 	//
+	fmt.Printf("\noffset %d", offset)
 	rows, err = client.db.Query(`
 		SELECT 
 			id,utr,amount,from_account_id,to_account_id,payment_time,status 
 			FROM transaction 
 			WHERE 
-				from_account_id 
+				(from_account_id 
 					IN (select id from users_account where user_id = $1)  
 			OR 
 				to_account_id 
-					IN (select id from users_account where user_id = $1)`,
-		account_id,
+					IN (select id from users_account where user_id = $1)
+				)
+			AND
+				id < $2
+			ORDER BY id DESC 
+			LIMIT $3
+		`,
+		account_id, offset, limit,
 	)
+	fmt.Println("limit")
+	fmt.Println(limit)
+
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
