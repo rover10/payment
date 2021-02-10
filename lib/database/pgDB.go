@@ -39,14 +39,17 @@ func (client *Client) PaymentHistory(account_id int, offset int64, limit int64) 
 	fmt.Printf("\noffset %d", offset)
 	rows, err = client.db.Query(`
 		SELECT 
-		ta.id, ta.utr, ta.amount, ta.from_account_id, ta.to_account_id, ta.payment_time, ta.status 
-			FROM transaction ta 
-			INNER JOIN
-				users_account ua ON (from_account_id = ua.id  OR to_account_id = ua.id) AND user_id = $1
-			WHERE 
-				ta.id < $2
-			ORDER BY ta.id DESC 
-			LIMIT $3
+			ta.id, ta.utr, ta.amount, ta.from_account_id, ta.to_account_id, ta.payment_time, ta.status, 
+			CASE WHEN ta.from_account_id = ua.id THEN 'sent' ELSE 'receive' END AS payment
+		FROM 
+			transaction ta 
+		INNER JOIN
+			users_account ua ON (ta.from_account_id = ua.id  OR ta.to_account_id = ua.id) AND user_id = $1
+		WHERE 
+			ta.id < $2
+		ORDER BY 
+			ta.id DESC 
+		LIMIT $3
 		`,
 		account_id, offset, limit,
 	)
@@ -69,6 +72,7 @@ func (client *Client) PaymentHistory(account_id int, offset int64, limit int64) 
 			&pay.ToAccount,
 			&pay.PaymentTime,
 			&pay.Status,
+			&pay.Payment,
 		)
 		if err != nil {
 			fmt.Println(err)

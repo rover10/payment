@@ -9,5 +9,5 @@ type PaymentHistory struct {
 	ToAccount   int64   `json:"toAccountId"`
 	PaymentTime string  `json:"paymentTime"`
 	Status      string  `json:"status"`
-	PaymentType string  `json:"paymentType"`
+	Payment     string  `json:"payment"`
 }
