@@ -34,6 +34,8 @@ func (client *Client) PaymentHistory(account_id int) ([]model.PaymentHistory, er
 	var rows *sql.Rows
 	var err error
 	// Todo - Paging
+	// Fetch in reverse order to get latest payment first
+	//
 	rows, err = client.db.Query(`
 		SELECT 
 			id,utr,amount,from_account_id,to_account_id,payment_time,status 
