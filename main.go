@@ -11,8 +11,8 @@ import (
 func main() {
 	fmt.Println("Payment service")
 	cfg := config.Config{Host: "localhost", Port: 8080}
-	api.StartServer(&cfg)
 	initDB(&cfg)
+	api.StartServer(&cfg)
 }
 func initDB(cfg *config.Config) database.DBClient {
 	//Connect to db
