@@ -32,14 +32,9 @@ func NewServer(cfg *config.Config) *Server {
 	return &server
 }
 
-func StartServer() {
-	cfg := config.Config{Host: "localhost", Port: 8080}
-	server := NewServer(&cfg)
-	server.Config = &cfg
+func StartServer(cfg *config.Config) {
 
-	//Connect to db
-	dbclient := database.Client{}
-	dbclient.DBConnect(&cfg)
-	server.Database = &dbclient
+	server := NewServer(cfg)
+	server.Config = cfg
 	server.Start()
 }

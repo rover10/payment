@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo"
+	"github.com/rover10/lib/database"
 )
 
 func (s *Server) TransactionHistory(context echo.Context) error {
@@ -35,6 +36,6 @@ func (s *Server) TransactionHistory(context echo.Context) error {
 		}
 	}
 
-	res, _ := s.Database.PaymentHistory(userId, offSet, limit)
+	res, _ := database.DB.PaymentHistory(userId, offSet, limit)
 	return context.JSON(http.StatusOK, res)
 }
