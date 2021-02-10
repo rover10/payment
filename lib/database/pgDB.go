@@ -44,8 +44,8 @@ func (client *Client) PaymentHistory(account_id int, offset int64, limit int64) 
 			INNER JOIN
 				users_account ua ON (from_account_id = ua.id  OR to_account_id = ua.id) AND user_id = $1
 			WHERE 
-				id < $2
-			ORDER BY id DESC 
+				ta.id < $2
+			ORDER BY ta.id DESC 
 			LIMIT $3
 		`,
 		account_id, offset, limit,
