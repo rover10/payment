@@ -20,7 +20,7 @@ For e.g. ``v1/payment/history/1?limit=2&offset=19`` would get next 2 transaction
     },
     "toBank": {
       "name": "Housing Development Finance Corporation Limited Bank",
-      "account": "1230*****",
+      "account": "1220*****",
       "bankIcon": "http://icon.mobile.matchmove/mobile/hdfc.png"
     }
   },
@@ -38,7 +38,7 @@ For e.g. ``v1/payment/history/1?limit=2&offset=19`` would get next 2 transaction
     },
     "toBank": {
       "name": "Housing Development Finance Corporation Limited Bank",
-      "account": "1234*****",
+      "account": "1220*****",
       "bankIcon": "http://icon.mobile.matchmove/mobile/hdfc.png"
     }
   }
@@ -63,7 +63,7 @@ To get next 3 transactions ``v1/payment/history/1?limit=5&offset=17``
     },
     "toBank": {
       "name": "State Bank of India",
-      "account": "1230*****",
+      "account": "1234*****",
       "bankIcon": "http://icon.mobile.matchmove/mobile/sbi.png"
     }
   },
@@ -81,7 +81,7 @@ To get next 3 transactions ``v1/payment/history/1?limit=5&offset=17``
     },
     "toBank": {
       "name": "State Bank of India",
-      "account": "1234*****",
+      "account": "1230*****",
       "bankIcon": "http://icon.mobile.matchmove/mobile/sbi.png"
     }
   },
@@ -99,7 +99,7 @@ To get next 3 transactions ``v1/payment/history/1?limit=5&offset=17``
     },
     "toBank": {
       "name": "State Bank of India",
-      "account": "1234*****",
+      "account": "1230*****",
       "bankIcon": "http://icon.mobile.matchmove/mobile/sbi.png"
     }
   }
