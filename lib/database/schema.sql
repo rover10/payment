@@ -1,4 +1,4 @@
-
+-- Postgres database
 create table users (id bigserial unique,
 	upi_id varchar(50) unique,
 	mob_number varchar(10),
@@ -39,3 +39,4 @@ create table transaction(
 	payment_gateway varchar(50) not null,
 	status varchar(50)
 );
+
