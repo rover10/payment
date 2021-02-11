@@ -106,3 +106,10 @@ To get next 3 transactions ``v1/payment/history/1?limit=5&offset=17``
 ]
 ```
 
+## Schema
+The schema SQL script can be found at https://github.com/rover10/payment/blob/master/lib/database/schema.sql. 
+
+
+## ER diagram
+The ER diagram for this is   https://github.com/rover10/payment/blob/master/ER.png
+ 
