@@ -35,12 +35,24 @@ func (client *Client) PaymentHistory(account_id int, offset int64, limit int64) 
 		SELECT 
 			ta.id, ta.utr, ta.amount, ta.payment_time, ta.status, 
 			CASE WHEN ta.from_account_id = ua.id THEN 'sent' ELSE 'received' END AS payment,
-			(SELECT b.name as sender_user_bank from users_account ua2 INNER JOIN transaction t ON ua2.id = t.from_account_id INNER JOIN bank b ON b.id = ua2.bank_id WHERE ta.id = t.id),
-			(SELECT left(ua2.account_number, -5) || '*****' as sender_acc_no from users_account ua2 INNER JOIN transaction t ON ua2.id = t.from_account_id INNER JOIN bank b ON b.id = ua2.bank_id WHERE ta.id = t.id),
-			(SELECT b.icon_url as sender_user_bank_icon from users_account ua2 INNER JOIN transaction t ON ua2.id = t.from_account_id INNER JOIN bank b ON b.id = ua2.bank_id WHERE ta.id = t.id),
-			(SELECT b.name as receiver_user_bank from users_account ua2 INNER JOIN transaction t ON ua2.id = t.to_account_id INNER JOIN bank b ON b.id = ua2.bank_id WHERE ta.id = t.id),
-			(SELECT left(ua2.account_number, -5) || '*****' as receiver_acc_no from users_account ua2 INNER JOIN transaction t ON ua2.id = t.to_account_id INNER JOIN bank b ON b.id = ua2.bank_id WHERE ta.id = t.id),
-			(SELECT b.icon_url as receiver_user_bank_icon from users_account ua2 INNER JOIN transaction t ON ua2.id = t.to_account_id INNER JOIN bank b ON b.id = ua2.bank_id WHERE ta.id = t.id)
+			(SELECT b.name as sender_user_bank from users_account ua2 
+				INNER JOIN transaction t ON ua2.id = t.from_account_id 
+				INNER JOIN bank b ON b.id = ua2.bank_id WHERE ta.id = t.id),
+			(SELECT left(ua2.account_number, -5) || '****' as sender_acc_no from users_account ua2 
+				INNER JOIN transaction t ON ua2.id = t.from_account_id 
+				INNER JOIN bank b ON b.id = ua2.bank_id WHERE ta.id = t.id),
+			(SELECT b.icon_url as sender_user_bank_icon from users_account ua2 
+				INNER JOIN transaction t ON ua2.id = t.from_account_id 
+				INNER JOIN bank b ON b.id = ua2.bank_id WHERE ta.id = t.id),
+			(SELECT b.name as receiver_user_bank from users_account ua2 
+				INNER JOIN transaction t ON ua2.id = t.to_account_id 
+				INNER JOIN bank b ON b.id = ua2.bank_id WHERE ta.id = t.id),
+			(SELECT left(ua2.account_number, -5) || '****' as receiver_acc_no from users_account ua2 
+				INNER JOIN transaction t ON ua2.id = t.to_account_id 
+				INNER JOIN bank b ON b.id = ua2.bank_id WHERE ta.id = t.id),
+			(SELECT b.icon_url as receiver_user_bank_icon from users_account ua2 
+				INNER JOIN transaction t ON ua2.id = t.to_account_id 
+				INNER JOIN bank b ON b.id = ua2.bank_id WHERE ta.id = t.id)
 		FROM 
 			transaction ta 
 		INNER JOIN
