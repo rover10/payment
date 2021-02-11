@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"time"
 
@@ -31,13 +30,8 @@ func (client *Client) CreatePayment(model.Payment) (model.Payment, error) {
 }
 
 func (client *Client) PaymentHistory(account_id int, offset int64, limit int64) ([]model.PaymentHistory, error) {
-	var rows *sql.Rows
-	var err error
-	// Todo - Paging
-	// Fetch in reverse order to get latest payment first
-	//
-	fmt.Printf("\noffset %d", offset)
-	rows, err = client.db.Query(`
+	// Fetch latest payments first
+	rows, err := client.db.Query(`
 		SELECT 
 			ta.id, ta.utr, ta.amount, ta.from_account_id, ta.to_account_id, ta.payment_time, ta.status, 
 			CASE WHEN ta.from_account_id = ua.id THEN 'sent' ELSE 'receive' END AS payment
@@ -54,7 +48,7 @@ func (client *Client) PaymentHistory(account_id int, offset int64, limit int64) 
 		account_id, offset, limit,
 	)
 	if err != nil {
-		fmt.Println(err)
+		log.Printf("PaymentHistory: error executing query: %v, account_id: %d", err, account_id)
 		return nil, err
 	}
 
@@ -72,7 +66,7 @@ func (client *Client) PaymentHistory(account_id int, offset int64, limit int64) 
 			&pay.Payment,
 		)
 		if err != nil {
-			fmt.Println(err)
+			log.Printf("PaymentHistory: error reading row: %v, err: %v ", rows, err)
 			return nil, err
 		}
 		allPays = append(allPays, pay)
