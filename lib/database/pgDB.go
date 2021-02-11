@@ -29,11 +29,6 @@ func (client *Client) CreatePayment(model.Payment) (model.Payment, error) {
 	return model.Payment{}, nil
 }
 
-/*
-SELECT b.name FROM transaction t
-INNER JOIN users_account ua ON ua.id = t.from_account_id
-INNER JOIN bank b ON b.id = ua.bank_id  where t.id = 1;
-*/
 func (client *Client) PaymentHistory(account_id int, offset int64, limit int64) ([]model.PaymentHistory, error) {
 	// Fetch latest payments first
 	rows, err := client.db.Query(`
