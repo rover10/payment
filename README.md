@@ -4,6 +4,8 @@ This is a Go service which implements an api for getting transaction history of 
 There is also an ``offset`` query param which can be set to get next transactions. The offset is the id of the last transaction in the list.
 For e.g. ``v1/payment/history/1?limit=2&offset=19`` would get next 2 transaction below transaction id 19.
 
+The api takes userId path parameter ``v1/payment/history/{userId}?limit=2&offset=19``
+
 ```
 [
   {
