@@ -47,7 +47,7 @@ The api takes userId path parameter ``v1/payment/history/{userId}?limit=2&offset
 ]
 ```
 
-To get next 3 transactions ``v1/payment/history/1?limit=5&offset=17``
+To get next 3 transactions ``v1/payment/history/1?limit=3&offset=17``
 
 ```
 [
